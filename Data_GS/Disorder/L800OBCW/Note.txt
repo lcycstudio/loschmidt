@@ -1,0 +1,18 @@
+OBC = open boundary condition
+PBC = periodic boundary condition
+SPH = single particle Hamiltonian
+MPH = many particle Hamiltonian
+RR = return rate
+LE = Loschmidt echo
+del = delta dimerization (quench from -/+ to +/-)
+W = disorder
+GS = ground state
+
+This folder has two data sets: W=0 and W=0.01. The SSH model 
+with OBC, L=800, SPH quenches from +0.5 to -0.5. The results are
+averaged over 20,000 samples. 
+
+Please run the .py files to see the plots for the data.
+
+The plots are the same as we quench from +0.5 to -0.5 even though there
+are disorderness.

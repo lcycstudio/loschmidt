@@ -1,0 +1,16 @@
+OBC = open boundary condition
+PBC = periodic boundary condition
+SPH = single particle Hamiltonian
+MPH = many particle Hamiltonian
+RR = return rate
+LE = Loschmidt echo
+del = delta dimerization (quench from -/+ to +/-)
+W = disorder
+GS = ground state
+
+
+In this folder, we compare the Loschmidt echo and return rate obtained
+from both the SPH and the MPH for the SSH model with OBC. There are four 
+data sets for different disorder W. The system size is L=14. The quench is 
+from -0.5 to +0.5. The results show the results obtained from two calculations
+are the same.
