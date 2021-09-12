@@ -1,0 +1,21 @@
+SSH, OBC, SPH, RR
+del = -0.5 -> +0.5
+W = from 0.0 to 5e-14
+L = 800
+samples = 20,000
+
+
+Because the results have .dat and .txt files, and this file is a .txt
+file, I move the Note.txt to this folder to avoid conflicts.
+
+This folder has several data: from W=0 to W=5e-14. The SSH model 
+with OBC, L=800, quenches from -0.5 to +0.5. The results are
+averaged over 20,000 samples. 
+
+Please run the .py files to see the plots for the data.
+
+Due to the numerical precision problem, the data for L=800 cannot produce
+the correct return rate. Part of my thesis argument is to demonstrate 
+the problem and show that there exists a hypothetical disorder value W for 
+this sytem size L=800 if getting the return rate for this system size is 
+computationally feasible.

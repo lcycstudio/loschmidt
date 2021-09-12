@@ -1,0 +1,145 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Aug 20 15:34:20 2017
+
+@author: LewisCYC
+"""
+import os             
+import glob
+import numpy as np
+import matplotlib.pyplot as plt
+#from mpl_toolkits.axes_grid1.inset_locator import InsetPosition
+
+L=14
+V=1.0
+tint=0
+tmax=50
+dt=0.005    
+openbc=1
+if openbc==1:
+    bc='OBC'
+else:
+    bc='PBC'
+cwd = os.getcwd() #current working directory
+item=glob.glob("*.txt")
+item2=glob.glob("*.dat")
+tm=np.arange(0,tmax+dt/2,dt)
+Pfiles=np.zeros((len(item),len(tm)))
+Qfiles=np.zeros((len(item2),len(tm)))
+a=0
+for i in range(len(item)):
+    f=open(item[i],'r')
+    AA=f.readlines()
+    f.close()
+    for j in range(len(AA)):
+        Pfiles[a][j]=AA[j]
+    a+=1
+a=0
+for i in range(len(item2)):
+    f=open(item2[i],'r')
+    AA=f.readlines()
+    f.close()
+    for j in range(len(AA)):
+        Qfiles[a][j]=AA[j]
+    a+=1
+
+AS=Qfiles[0]
+
+"""Plot the Figure """
+wb=['1e-4','1e-3','0.01','0.05','0.1','1.0','3.5','6.0']
+
+"""Plot the Figure """
+#wb=['1e-4','1e-3','0.01','0.05','0.1','1.0','3.5','6.0']
+props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+textr='\n'.join((
+        r'(A) $\Delta$ = 1.0',))
+fig = plt.figure(figsize=(12,4))
+ax1 = plt.subplot(121)
+
+ax1.plot(tm,Qfiles[0],label='W=0.0')
+for num in range(len(Pfiles)):
+    ax1.plot(tm,Pfiles[num],label='W='+wb[num])
+plt.xlabel('t')
+plt.ylabel(r'l$^\ast$(t)')
+plt.xlim(-2,64)
+plt.text(5.3,0.55,textr)
+ax1.legend(loc='upper right',fontsize='9')
+tm[:2000]
+Qfiles[0][:2000]
+top=np.amax(Qfiles[0][:2000])
+for i in range(2000):
+    if top==Qfiles[0][i]:
+        tc=tm[i]
+plt.axvline(tc,-0.5,top/0.65,linestyle=':')
+plt.text(tc+0.5,-0.02,r'$t_{c_1}$')
+print(r'tc is',tc)
+
+dy = np.zeros(Pfiles.shape,np.float)
+dy[:,0:-1] = np.diff(Pfiles)/np.diff(tm)
+dy[:,-1] = (Pfiles[:,-1] - Pfiles[:,-2])/(tm[-1] - tm[-2])
+
+dyy=np.zeros(AS.shape,np.float)
+dyy[0:-1]=np.diff(AS)/np.diff(tm)
+dyy[-1]=(AS[-1]-AS[-2])/(tm[-1]-tm[-2])
+
+
+ax2 = plt.subplot(122)
+ax2.plot(tm,dyy,label='W=0.0')
+for num in range(len(Pfiles)):
+    ax2.plot(tm,dy[num],label='W='+wb[num])
+plt.xlabel('t')
+plt.ylabel(r'dl$^\ast$/dt')
+#plt.ylim(-12,10)
+"""
+iax = plt.axes([-1, 0, 2, 2])
+ip = InsetPosition(ax2, [0.05, 0.05, 0.45, 0.45]) #posx, posy, width, height
+iax.set_axes_locator(ip)
+plt.plot(tm[7330:7400],dyy[7330:7400])
+for num in range(len(Pfiles)):
+    plt.plot(tm[7330:7400],dy[num][7330:7400])#,'--',label='W='+wb[num])
+plt.yticks([])
+plt.xticks([])
+"""
+plt.show()
+
+
+
+"""
+fig = plt.figure()
+ax = plt.subplot(111)
+for num in range(len(Pfiles)):
+    if num == 3:
+        ax.plot(tm[0:5501],Pfiles[num][0:5501],'--',label=item[num][13:-4])
+    else:
+        ax.plot(tm[0:5501],Pfiles[num][0:5501],label=item[num][13:-4])
+plt.xlabel('t')
+plt.ylabel('l(t)')
+ax.legend(bbox_to_anchor=(1.01, 1.00),ncol=1)
+plt.show()
+
+
+
+fig = plt.figure()
+ax = plt.subplot(111)
+for num in range(len(Pfiles)):
+    if num == 3:
+        ax.plot(tm[4500:10001],Pfiles[num][4500:10001],'--',label=item[num][13:-4])
+    else:
+        ax.plot(tm[4500:10001],Pfiles[num][4500:10001],label=item[num][13:-4])
+plt.xlabel('t')
+plt.ylabel('l(t)')
+ax.legend(bbox_to_anchor=(1.01, 1.00),ncol=1)
+plt.show()
+
+
+fig = plt.figure()
+ax = plt.subplot(111)
+for num in range(len(Pfiles)):
+    ax.plot(tm[500:2006],Pfiles[num][500:2006],label=item[num][19:-4])
+plt.xlabel('t')
+plt.ylabel('l(t)')
+ax.legend(bbox_to_anchor=(1.01, 1.0),ncol=1)
+plt.show()
+"""
+
+
